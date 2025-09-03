@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Entry Form</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      /* Books background image */
+      background: url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da') 
+        no-repeat center center/cover;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 20px;
+      width: 550px;   /* 🔥 Box size bigger */
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #2a2a72;
+      font-family: 'Trebuchet MS', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      text-align: left;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    button {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #2575fc, #6a11cb);
+      transform: scale(1.05);
+    }
+
+    .message {
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      display: none;
+    }
+
+    #successMessage { color: green; }
+    #errorMessage { color: red; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📚 Book Entry Form</h1>
+    <form id="entryForm">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+      <label for="book">Book Name</label>
+      <input type="text" id="book" name="book" placeholder="Enter book name" required>
+
+      <label for="type">Book Type</label>
+      <select id="type" name="type" required>
+        <option value="">-- Select Type --</option>
+        <option value="Fiction">Fiction</option>
+        <option value="Non-fiction">Non-fiction</option>
+        <option value="Comics">Comics</option>
+        <option value="Education">Education</option>
+      </select>
+
+      <button type="submit">Submit</button>
+    </form>
+    <div class="message" id="successMessage">✅ Your details submitted successfully!</div>
+    <div class="message" id="errorMessage"></div>
+  </div>
+
+  <script>
+    document.getElementById("entryForm").addEventListener("submit", function(event){
+      event.preventDefault();
+
+      let name = document.getElementById("name").value.trim();
+      let email = document.getElementById("email").value.trim();
+      let book = document.getElementById("book").value.trim();
+      let type = document.getElementById("type").value;
+
+      let errorMessage = "";
+      let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+      if(name.length < 3){
+        errorMessage = "⚠️ Name must be at least 3 characters long.";
+      } else if(!email.match(emailPattern)){
+        errorMessage = "⚠️ Please enter a valid email address.";
+      } else if(book.length < 2){
+        errorMessage = "⚠️ Book name must be at least 2 characters.";
+      } else if(type === ""){
+        errorMessage = "⚠️ Please select a book type.";
+      }
+
+      if(errorMessage){
+        document.getElementById("errorMessage").innerText = errorMessage;
+        document.getElementById("errorMessage").style.display = "block";
+        document.getElementById("successMessage").style.display = "none";
+      } else {
+        document.getElementById("successMessage").style.display = "block";
+        document.getElementById("errorMessage").style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
